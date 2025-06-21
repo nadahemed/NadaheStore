@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nadahe Store - Premium Gaming Equipment</title>
+    <meta name="description" content="Nadahe Store : Matériel gaming haut de gamme, actualités, avis et conseils pour gamers exigeants.">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1055/1055687.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-glow: #00ff88;
+            --dark-bg: #0a1437;
+            --dark-bg2: #1a233a;
+            --card-bg: #23272b;
+            --text-glow: 0 0 8px #00ff88;
+        }
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg2) 100%);
+            color: #fff;
+            font-family: 'Rajdhani', Arial, sans-serif;
+        }
+        .navbar {
+            background: #111315;
+            box-shadow: 0 2px 8px rgba(0,255,136,0.05);
+        }
+        .glow-text {
+            font-family: 'Orbitron', Arial, sans-serif;
+            color: var(--primary-glow);
+            text-shadow: var(--text-glow);
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .btn-gaming {
+            background: var(--primary-glow);
+            color: #181a1b;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-gaming:hover, .btn-gaming:focus {
+            background: #00c96b;
+            color: #fff;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(0,255,136,0.05);
+        }
+        .card-title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            color: var(--primary-glow);
+            font-weight: 700;
+        }
+        .nav-link, .navbar-brand {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-weight: 700;
+        }
+        .nav-link.active, .nav-link:focus, .nav-link:hover {
+            color: var(--primary-glow) !important;
+        }
+        .badge.bg-danger {
+            font-size: 0.8rem;
+        }
+        #home {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        #home .container {
+            max-width: 600px;
+        }
+        #products {
+            scroll-margin-top: 80px;
+        }
+        #loginModal .modal-content {
+            background: var(--card-bg);
+            color: #fff;
+        }
+        #logoutBtn {
+            display: none;
+        }
+        #userWelcome {
+            display: none;
+        }
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0,255,136,0.2);
+        }
+        #backToTop.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 767px) {
+            .display-4 { font-size: 2.2rem; }
+            .card-title { font-size: 1.1rem; }
+            #home .container { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container-fluid">
+                <!-- Logo - Far Left -->
+                <a class="navbar-brand glow-text" href="#home" aria-label="Accueil Nadahe Store">
+                    <i class="fas fa-store me-2"></i>NADAHE STORE
+                </a>
+                
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Ouvrir le menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Center Navigation -->
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#products">Produits</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#news">Store News</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Search Bar - Center -->
+                <div class="navbar-nav mx-auto d-none d-lg-flex">
+                    <div class="search-container">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" id="searchInput" placeholder="Rechercher un produit..." aria-label="Rechercher">
+                            <button class="btn btn-gaming" type="button" id="searchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-suggestions" id="searchSuggestions"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - User & Cart -->
+                <div class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item" id="userWelcome">
+                        <span class="nav-link"><i class="fas fa-user"></i> <span id="userName"></span></span>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <button class="btn btn-sm btn-gaming me-2" id="loginBtn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        <button class="btn btn-sm btn-secondary me-2" id="signupBtn" data-bs-toggle="modal" data-bs-target="#signupModal">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </button>
+                        <button class="btn btn-sm btn-danger me-2" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                        <button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </li>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="row justify-content-center text-center min-vh-100 align-items-center">
+                <div class="col-12">
+                    <div class="hero-content">
+                        <h1 class="hero-title mb-4">Bienvenue chez <span class="brand-highlight">Nadahe Store</span></h1>
+                        <p class="hero-subtitle mb-5">Votre destination shopping en ligne pour tous vos besoins. Découvrez notre vaste collection de produits de qualité, des prix compétitifs et un service client exceptionnel.</p>
+                        <div class="hero-features mb-5">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="feature-item">
+                                        <i class="fas fa-shipping-fast feature-icon"></i>
+                                        <h5>Livraison Rapide</h5>
+                                        <p>Livraison gratuite en 24h</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="feature-item">
+                                        <i class="fas fa-shield-alt feature-icon"></i>
+                                        <h5>Garantie Sécurisée</h5>
+                                        <p>Paiement 100% sécurisé</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="feature-item">
+                                        <i class="fas fa-headset feature-icon"></i>
+                                        <h5>Support 24/7</h5>
+                                        <p>Service client disponible</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-buttons">
+                            <button class="btn btn-gaming btn-lg me-3 mb-3" id="exploreCollectionBtn">
+                                <i class="fas fa-shopping-bag"></i> Découvrir nos produits
+                            </button>
+                            <button class="btn btn-outline-light btn-lg mb-3" id="learnMoreBtn">
+                                <i class="fas fa-info-circle"></i> En savoir plus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produits -->
+    <section id="products" class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="mb-4 glow-text text-center">Nos Produits</h2>
+                    <!-- Mobile Search Bar -->
+                    <div class="d-lg-none mb-4">
+                        <div class="search-container">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-input" id="mobileSearchInput" placeholder="Rechercher un produit..." aria-label="Rechercher">
+                                <button class="btn btn-gaming" type="button" id="mobileSearchBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="search-suggestions" id="mobileSearchSuggestions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" id="productsList">
+                <!-- Les produits seront injectés ici -->
+            </div>
+            <div id="productsError" class="text-center text-danger mt-3"></div>
+        </div>
+    </section>
+
+    <!-- Store News -->
+    <section id="news" class="py-5">
+        <div class="container">
+            <h2 class="mb-4 glow-text text-center">Store News</h2>
+            <div class="row" id="newsList">
+                <!-- Les news seront injectées ici -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="glow-text text-center mb-5">Contactez-nous</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm" class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="name" placeholder="Nom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" class="form-control" name="subject" placeholder="Sujet" required>
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form-control" name="message" rows="4" placeholder="Votre message" required></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-gaming btn-lg">Envoyer le message</button>
+                        </div>
+                    </form>
+                    <div id="contactMsg" class="mt-3 text-center"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="glow-text mb-3">NADAHE STORE</h5>
+                    <p class="mb-3">Votre partenaire gaming de confiance depuis 2020. Nous proposons les meilleurs produits gaming avec un service client exceptionnel.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-light me-3" aria-label="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-light me-3" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-light me-3" aria-label="Instagram"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-light" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="glow-text mb-3">Liens Rapides</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-light text-decoration-none">Accueil</a></li>
+                        <li><a href="#products" class="text-light text-decoration-none">Produits</a></li>
+                        <li><a href="#news" class="text-light text-decoration-none">Store News</a></li>
+                        <li><a href="#contact" class="text-light text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <h6 class="glow-text mb-3">Informations de Contact</h6>
+                    <div class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <span>123 Rue du Gaming, 75001 Paris</span>
+                    </div>
+                    <div class="mb-2">
+                        <i class="fas fa-phone me-2"></i>
+                        <span>+33 1 23 45 67 89</span>
+                    </div>
+                    <div class="mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        <span>contact@nadahestore.com</span>
+                    </div>
+                    <div class="mb-2">
+                        <i class="fas fa-clock me-2"></i>
+                        <span>Lun-Sam: 9h-19h</span>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <!-- Bottom Footer -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Nadahe Store. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light text-decoration-none me-3">Politique de confidentialité</a>
+                    <a href="#" class="text-light text-decoration-none me-3">Conditions d'utilisation</a>
+                    <a href="#" class="text-light text-decoration-none">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="loginForm">
+            <div class="modal-header">
+              <h5 class="modal-title glow-text" id="loginModalLabel"><i class="fas fa-sign-in-alt"></i> Connexion</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Mot de passe" required>
+                </div>
+                <div id="loginError" class="text-danger text-center"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-gaming w-100">Se connecter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sign Up -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="signupForm">
+            <div class="modal-header">
+              <h5 class="modal-title glow-text" id="signupModalLabel"><i class="fas fa-user-plus"></i> Créer un compte</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Mot de passe" required>
+                </div>
+                <div id="signupError" class="text-danger text-center"></div>
+                <div id="signupSuccess" class="text-success text-center"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-gaming w-100">Créer mon compte</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Panier -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title glow-text" id="cartModalLabel"><i class="fas fa-shopping-cart"></i> Votre Panier</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body" id="cartItems">
+            <!-- Les articles du panier seront injectés ici -->
+          </div>
+          <div class="modal-footer">
+            <span class="me-auto fw-bold" id="cartTotal"></span>
+            <button type="button" class="btn btn-gaming" data-bs-dismiss="modal">Continuer mes achats</button>
+            <button type="button" class="btn btn-success" id="checkoutBtn">Commander</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Product Detail -->
+    <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title glow-text" id="productDetailModalLabel"><i class="fas fa-info-circle"></i> Détails du Produit</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body" id="productDetailBody">
+            <!-- Les détails du produit seront injectés ici -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gaming" data-bs-dismiss="modal">Fermer</button>
+            <button type="button" class="btn btn-success" id="addToCartFromDetail">Ajouter au Panier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Achat -->
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title glow-text" id="buyModalLabel"><i class="fas fa-credit-card"></i> Acheter le produit</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body" id="buyModalBody">
+            <!-- Infos produit -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gaming" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-success" id="confirmBuyBtn">Confirmer l'achat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton retour en haut -->
+    <button id="backToTop" class="btn btn-gaming" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="ecommerce.js"></script>
+</body>
+</html> 
